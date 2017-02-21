@@ -1,13 +1,30 @@
-<div ng-controller="ProjectController" class="container-fluid">
+<div ng-controller="ProjectController as projectController" class="panel panel-default">
     <!--&lt;!&ndash; doesn't support controllerAs syntax https://github.com/voidberg/html5sortable/issues/86&ndash;&gt;-->
     <!--<ul class="list-group ng-pristine ng-untouched ng-valid ui-sortable ng-not-empty">-->
         <!--&lt;!&ndash; ngRepeat: itm in data1 &ndash;&gt;<li class="list-group-item ng-binding ng-scope">-->
         <!--<em class="fa fa-reorder fa-fw text-muted mr-lg"></em>Donald Hoffman</li>-->
     <!--</ul>-->
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-4">
+                <ul class="list-group">
+                    <li ng-repeat="itm in projectList" class="list-group-item cursor-pointer">
+                        <em class="fa fa-reorder fa-fw text-muted mr-lg"></em><strong ng-click="loadProject($index)" >{{itm.url}}</strong>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>工程地址:{{project.url}}</h4>
+                    </div>
+                    <div class="panel-body">
 
-    <ul class="list-group">
-        <li ng-repeat="itm in projectList" class="list-group-item">
-            <em class="fa fa-reorder fa-fw text-muted mr-lg"></em>{{itm.url}}
-        </li>
-    </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
