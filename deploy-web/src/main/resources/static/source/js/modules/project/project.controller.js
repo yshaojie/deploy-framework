@@ -9,6 +9,7 @@
     function ProjectController(ProjectService,$scope) {
         var vm = this;
         $scope.loadProject = loadProject;
+        $scope.pack = pack;
         active();
         function active() {
 
@@ -25,6 +26,17 @@
         }
         function loadProject(index) {
             $scope.project = $scope.projectList[index];
+            ProjectService.detail(function (data) {
+                alert(branchs)
+                $scope.branchs = data.branchs
+                $scope.modules = data.modules
+            },$scope.project.id)
+
+        }
+
+        function pack() {
+            alert($scope.project.module)
+            alert($scope.project.branch)
         }
 
     }

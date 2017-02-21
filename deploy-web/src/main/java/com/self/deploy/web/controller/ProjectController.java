@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * Created by shaojieyue
@@ -38,5 +39,18 @@ public class ProjectController {
     public Object list(){
         Iterable<Project> list = projectService.findAll();
         return list;
+    }
+
+    @RequestMapping(value = "package",method = RequestMethod.PUT)
+    @ResponseBody
+    public Object pack(String branch,int projectId,String module){
+        return projectService.pack(projectId,module,branch);
+    }
+
+    @RequestMapping(value = "detail",method = RequestMethod.GET)
+    @ResponseBody
+    public Object detail(int projectId){
+        Map detail = projectService.findDetail(projectId);
+        return detail;
     }
 }

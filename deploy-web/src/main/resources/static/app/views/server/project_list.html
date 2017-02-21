@@ -19,7 +19,30 @@
                         <h4>工程地址:{{project.url}}</h4>
                     </div>
                     <div class="panel-body">
+                        <form role="form" ng-submit="pack()" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">分支</label>
+                                <div class="col-sm-4">
+                                    <input type="text" placeholder="分支" name="name" ng-model="packageProject.branch" required class="form-control" />
+                                    <select chosen="" ng-init="project.branch = branchs[0]" name="project.branch" ng-model="project.branch" ng-options="branch for branch in branchs" class="chosen-select input-md">
+                                    </select>
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">模块</label>
+                                <div class="col-sm-4">
+                                    <input type="text" placeholder="分支" name="name" ng-model="packageProject.branch" required class="form-control" />
+                                    <select chosen="" ng-init="project.module = modules[0]" name="project.module" ng-model="project.module" ng-options="module for module in modules" class="chosen-select input-md">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-primary">执行打包</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
