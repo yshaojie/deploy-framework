@@ -27,8 +27,8 @@ public class MenuController {
                 "    \"translate\": \"sidebar.heading.HEADER\"\n" +
                 "  },\n" +
                 "  {\n" +
-                "    \"text\": \"Single View\",\n" +
-                "    \"sref\": \"app.singleview\",\n" +
+                "    \"text\": \"服务列表\",\n" +
+                "    \"sref\": \"app.server_list\",\n" +
                 "    \"icon\": \"fa fa-file-o\",\n" +
                 "    \"translate\": \"sidebar.nav.SINGLEVIEW\"\n" +
                 "  },\n" +

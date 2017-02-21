@@ -19,7 +19,7 @@
         $locationProvider.html5Mode(false);
 
         // defaults to dashboard
-        $urlRouterProvider.otherwise('/app/singleview');
+        $urlRouterProvider.otherwise('/app/server_list');
 
         // 
         // Application Routes
@@ -31,16 +31,24 @@
               templateUrl: helper.basepath('app.html'),
               resolve: helper.resolveFor('modernizr', 'icons')
           })
-          .state('app.singleview', {
-              url: '/singleview',
-              title: 'Single View',
-              templateUrl: helper.basepath('singleview.html')
-          })
-          .state('app.submenu', {
-              url: '/submenu',
-              title: 'Submenu',
-              templateUrl: helper.basepath('submenu.html')
-          })
+          .state('app.server_list', {
+              url: '/server_list',
+              title: 'server_list',
+              templateUrl: helper.basepath('server/server_list.html')
+          }).state('page', {
+                url: '/page',
+                templateUrl: helper.basepath('page.html'),
+                abstract: true,
+                resolve: helper.resolveFor('modernizr', 'icons'),
+                controller: ['$rootScope', function($rootScope) {
+                    $rootScope.app.layout.isBoxed = false;
+                }]
+            })
+            .state('page.login', {
+                url: '/login',
+                title: 'Login',
+                templateUrl: helper.basepath('user/login.html')
+            })
           // 
           // CUSTOM RESOLVES
           //   Add your own resolves properties

@@ -1,0 +1,31 @@
+[
+  {
+    "text": "菜单",
+    "heading": "true"
+  },
+  {
+    "text": "服务列表",
+    "sref": "app.server_list",
+    "icon": "fa fa-file"
+  },
+  {
+    "text": "工程打包",
+    "sref": "app.server_package",
+    "icon": "fa fa-file"
+  },
+  {
+    "text": "添加工程",
+    "sref": "app.server_project",
+    "icon": "fa fa-file"
+  },
+  {
+    "text": "添加服务模板",
+    "sref": "app.server_template",
+    "icon": "fa fa-file"
+  },
+  {
+    "text": "用户权限管理",
+    "sref": "app.server_privilege",
+    "icon": "fa fa-file"
+  }
+]
