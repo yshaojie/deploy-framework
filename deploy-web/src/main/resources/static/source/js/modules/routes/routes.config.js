@@ -19,7 +19,8 @@
         $locationProvider.html5Mode(false);
 
         // defaults to dashboard
-        $urlRouterProvider.otherwise('/app/server_list');
+        $urlRouterProvider.otherwise('/app/project_list');
+
 
         // 
         // Application Routes
@@ -35,7 +36,16 @@
               url: '/server_list',
               title: 'server_list',
               templateUrl: helper.basepath('server/server_list.html')
-          }).state('page', {
+          })
+            .state('app.project_list', {
+                url: '/project_list',
+                title: 'project_list',
+                templateUrl: helper.basepath('server/project_list.html')
+            })
+
+
+
+            .state('page', {
                 url: '/page',
                 templateUrl: helper.basepath('page.html'),
                 abstract: true,

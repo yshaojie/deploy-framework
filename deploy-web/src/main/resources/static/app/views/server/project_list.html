@@ -1,0 +1,13 @@
+<div ng-controller="ProjectController" class="container-fluid">
+    <!--&lt;!&ndash; doesn't support controllerAs syntax https://github.com/voidberg/html5sortable/issues/86&ndash;&gt;-->
+    <!--<ul class="list-group ng-pristine ng-untouched ng-valid ui-sortable ng-not-empty">-->
+        <!--&lt;!&ndash; ngRepeat: itm in data1 &ndash;&gt;<li class="list-group-item ng-binding ng-scope">-->
+        <!--<em class="fa fa-reorder fa-fw text-muted mr-lg"></em>Donald Hoffman</li>-->
+    <!--</ul>-->
+
+    <ul class="list-group">
+        <li ng-repeat="itm in projectList" class="list-group-item">
+            <em class="fa fa-reorder fa-fw text-muted mr-lg"></em>{{itm.url}}
+        </li>
+    </ul>
+</div>

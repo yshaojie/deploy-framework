@@ -1,4 +1,4 @@
-package com.self.deploy.web.user.controller;
+package com.self.deploy.web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

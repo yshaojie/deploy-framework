@@ -25,7 +25,8 @@
             'app.loadingbar',
             'app.translate',
             'app.settings',
-            'app.utils'
+            'app.utils',
+            'app.project'
         ]);
 })();
 

@@ -10,12 +10,7 @@
   },
   {
     "text": "工程打包",
-    "sref": "app.server_package",
-    "icon": "fa fa-file"
-  },
-  {
-    "text": "添加工程",
-    "sref": "app.server_project",
+    "sref": "app.project_list",
     "icon": "fa fa-file"
   },
   {
