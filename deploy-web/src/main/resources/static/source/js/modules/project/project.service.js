@@ -33,7 +33,7 @@
 
         function detail(onSuccess,projectId) {
             $http
-                .put("/project/detail",{projectId:projectId})
+                .get("/project/detail?projectId="+projectId)
                 .success(function (data) {
                     onSuccess(data);
                 });

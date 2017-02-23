@@ -27,7 +27,6 @@
         function loadProject(index) {
             $scope.project = $scope.projectList[index];
             ProjectService.detail(function (data) {
-                alert(branchs)
                 $scope.branchs = data.branchs
                 $scope.modules = data.modules
             },$scope.project.id)

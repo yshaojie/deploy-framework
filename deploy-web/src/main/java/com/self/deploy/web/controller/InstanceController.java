@@ -11,6 +11,6 @@ public class InstanceController {
     private static final Logger logger = LoggerFactory.getLogger(InstanceController.class);
 
     public Object deploy(){
-
+        return null;
     }
 }

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,11 +43,16 @@ public class GitUtil {
         if (list == null) {
             return new String[0];
         }
-        String[] branchs = new String[list.size()];
+        List<String> branchs = new ArrayList<String>();
         for (int i = 0; i < list.size(); i++) {
-            branchs[i] = list.get(i).getName();
+            String name = list.get(i).getName();
+            name = name.substring(name.lastIndexOf("/")+1);
+            if (name.equalsIgnoreCase("head")) {
+                continue;
+            }
+            branchs.add(name);
         }
-        return branchs;
+        return branchs.stream().toArray(String[]::new);
     }
 
     /**
