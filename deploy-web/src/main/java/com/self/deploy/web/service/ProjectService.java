@@ -51,7 +51,9 @@ public class ProjectService {
     public String pack(int projectId, String module, String branch) {
         final Project project = projectRepository.findOne(projectId);
         Map<String, String> param = new HashMap<String, String>();
-        param.put("project", project.getUrl());
+        //git@115.28.128.76:backend/commons-parent.git
+        param.put("project", project.getUrl().trim().substring(project.getUrl().lastIndexOf("/")+1).replaceAll("\\.git",""));
+        param.put("project_git_path", project.getUrl());
         param.put("branch", branch);
         param.put("module", module);
         final String package_shell = System.getProperty("resource") + "/shells/package.sh";
