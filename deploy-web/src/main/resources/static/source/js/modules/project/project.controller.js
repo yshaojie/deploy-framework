@@ -34,8 +34,9 @@
         }
 
         function pack() {
-            alert($scope.project.module)
-            alert($scope.project.branch)
+            ProjectService.pack($scope.project.id,$scope.project.branch,$scope.project.module,function () {
+                alert("打包成功")
+            })
         }
 
     }

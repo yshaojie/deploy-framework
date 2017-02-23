@@ -54,7 +54,7 @@ public class ProjectService {
         param.put("project", project.getUrl());
         param.put("branch", branch);
         param.put("module", module);
-        final String package_shell = System.getenv("resource") + "/shells/package.sh";
+        final String package_shell = System.getProperty("resource") + "/shells/package.sh";
         return ShellUtil.exec(package_shell,param)[1];
     }
 

@@ -23,9 +23,15 @@
                 });
         }
 
-        function pack(onSuccess) {
+        function pack(projectId,branch,module,onSuccess) {
             $http
-                .put("/project/package",{})
+                .put("/project/package",{},{
+                    params:{
+                        projectId:projectId,
+                        branch:branch,
+                        module:module
+                    }
+                })
                 .success(function (data) {
                     onSuccess(data);
                 });
