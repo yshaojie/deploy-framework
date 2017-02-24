@@ -137,3 +137,4 @@ local.properties
 /deploy-web/src/main/resources/static/app/i18n/
 !/deploy-web/src/main/resources/static/app/i18n/
 !/deploy-web/src/main/resources/shells/
+!/deploy-agent/src/main/resources/bin/
