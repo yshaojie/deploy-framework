@@ -28,4 +28,8 @@ public class InstanceGroupService {
         instanceGroups.forEach(instanceGroup -> groups.add(instanceGroup));
         return groups;
     }
+
+    public InstanceGroup findById(int instanceGroupId) {
+        return instanceGroupRepository.findOne(instanceGroupId);
+    }
 }
