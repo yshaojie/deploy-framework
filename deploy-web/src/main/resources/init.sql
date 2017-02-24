@@ -21,3 +21,14 @@ CREATE TABLE `instance_group` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `Instance_Group_serverName_uindex` (`serverName`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13000033  DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE server_instance
+(
+    id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    ip VARCHAR(60) NOT NULL,
+    instance_group_id INT(11) NOT NULL,
+    deploy_time TIMESTAMP,
+    deploy_by VARCHAR(60)
+);
+CREATE UNIQUE INDEX server_instance_ip_instance_group_id_pk ON server_instance (ip, instance_group_id);

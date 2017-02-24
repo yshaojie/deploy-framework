@@ -26,7 +26,7 @@ public class InstanceGroup {
     @Id
     @GenericGenerator(name = "idGenerator", strategy = "identity")
     @GeneratedValue(generator = "idGenerator")
-    private String id;
+    private int id;
     private String mainClass;
     private String mainArgs;
     private String jvmArgs;
