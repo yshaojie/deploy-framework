@@ -34,8 +34,11 @@
         }
 
         function pack() {
-            ProjectService.pack($scope.project.id,$scope.project.branch,$scope.project.module,function () {
-                alert("打包成功")
+            $scope.package_message=undefined;
+            $("#project_main").addClass(" whirl traditional ")
+            ProjectService.pack($scope.project.id,$scope.project.branch,$scope.project.module,function (data) {
+                $("#project_main").removeClass(" whirl traditional ")
+                $scope.package_message=data.message;
             })
         }
 

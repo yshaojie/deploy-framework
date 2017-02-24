@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -44,7 +45,10 @@ public class ProjectController {
     @RequestMapping(value = "package",method = RequestMethod.PUT)
     @ResponseBody
     public Object pack(String branch,int projectId,String module){
-        return projectService.pack(projectId,module,branch);
+        final String message = projectService.pack(projectId, module, branch);
+        final HashMap hashMap = new HashMap();
+        hashMap.put("message",message);
+        return hashMap;
     }
 
     @RequestMapping(value = "detail",method = RequestMethod.GET)

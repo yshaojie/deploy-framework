@@ -44,6 +44,7 @@
   "bower_components/angular-sweetalert/SweetAlert.js",
   "bower_components/bootstrap-filestyle/src/bootstrap-filestyle.js",
   "bower_components/angular-file-upload/dist/angular-file-upload.js",
-  "bower_components/loaders.css/loaders.css"
+  "bower_components/loaders.css/loaders.css",
+  "bower_components/whirl/dist/whirl.css"
 
 ]
