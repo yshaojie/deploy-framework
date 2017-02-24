@@ -14,7 +14,7 @@
         this.queryAllInstanceGroup = queryAllInstanceGroup;
 
 
-        queryAllInstanceGroup = function (onSuccess) {
+         function queryAllInstanceGroup(onSuccess) {
             $http
                 .get("/instance_group/list")
                 .success(function (data) {

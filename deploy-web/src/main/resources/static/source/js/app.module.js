@@ -26,7 +26,8 @@
             'app.translate',
             'app.settings',
             'app.utils',
-            'app.project'
+            'app.project',
+            'app.instance'
         ]);
 })();
 

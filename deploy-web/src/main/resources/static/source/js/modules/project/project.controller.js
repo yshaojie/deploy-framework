@@ -4,7 +4,6 @@
     angular
         .module('app.project')
         .controller('ProjectController', ProjectController);
-
     ProjectController.$inject = ['ProjectService','$scope'];
     function ProjectController(ProjectService,$scope) {
         var vm = this;

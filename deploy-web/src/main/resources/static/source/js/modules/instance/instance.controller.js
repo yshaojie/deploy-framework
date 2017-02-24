@@ -8,7 +8,7 @@
     InstanceController.$inject = ['InstanceService','$scope'];
 
 
-    InstanceController = function (InstanceService,$scope) {
+     function InstanceController(InstanceService,$scope) {
         var vm = this;
         active();
 
