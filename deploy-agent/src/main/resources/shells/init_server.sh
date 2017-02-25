@@ -1,5 +1,6 @@
 #!/bin/bash
 
+shell_home="${shell_home}"
 server_name="${server_name}"
 server_home="/servers/${server_name}"
 server_log_home="/data/logs/${server_name}"
@@ -32,8 +33,8 @@ if [ -d "${server_log_home}" ]; then
 fi
 
 mkdir -pv ${server_log_home}
-
-cp template_server.sh ${server_home}/server.sh
+echo `pwd`
+cp ${shell_home}/template_server.sh ${server_home}/server.sh
 
 cd ${server_home}/
 ## '#' is the separator

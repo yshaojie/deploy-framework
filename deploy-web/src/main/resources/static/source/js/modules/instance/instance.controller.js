@@ -44,5 +44,12 @@
             });
 
         }
+
+        vm.addInstance = function () {
+            InstanceService.addInstance($scope.select_group.id,$scope.add_instance_ip,function (data) {
+                $scope.add_instance_ip = undefined;
+                alert(data.message)
+            });
+        }
     }
 })();

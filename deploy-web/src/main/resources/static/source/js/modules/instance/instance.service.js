@@ -18,6 +18,7 @@
         this.restartServers = restartServers;
         this.startServers = startServers;
         this.deleteServers = deleteServers;
+        this.addInstance = addInstance;
 
 
          function queryAllInstanceGroup(onSuccess) {
@@ -103,6 +104,23 @@
                     onSuccess(data);
                 });
         }
+
+        function addInstance(instanceGroupId, ip,onSuccess) {
+            $http.put("/instance/add",{
+                instanceGroupId:instanceGroupId,
+                ip:ip
+            },{
+                params:{
+                    instanceGroupId:instanceGroupId,
+                    ip:ip
+                }
+            })
+                .success(function (data) {
+                    onSuccess(data);
+                });
+        }
     }
+
+
 
 })();

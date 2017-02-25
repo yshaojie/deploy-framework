@@ -50,7 +50,9 @@ public class ShellUtil {
             logger.error("Exceprion",e);
         } finally {
             try {
-                br.close();
+                if (br != null) {
+                    br.close();
+                }
             } catch (IOException e) {
                 logger.error("Exceprion",e);
             }

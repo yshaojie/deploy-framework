@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,13 +134,13 @@ public class ServerInstanceService {
         try {
             httpResponse = httpclient.execute(httpPut);
         } catch (IOException e) {
-            throw new RuntimeException("send sms fail.",e);
+            throw new RuntimeException("exec fail.",e);
         }
         final String result;
         try {
             result = EntityUtils.toString(httpResponse.getEntity());
         } catch (IOException e) {
-            throw new RuntimeException("send sms fail.",e);
+            throw new RuntimeException("exec fail.",e);
         }
 
         //发送请求失败
@@ -150,6 +151,7 @@ public class ServerInstanceService {
         return "";
     }
 
+    @Transactional
     public String addServerInstance(int instanceGroupId, String ip) {
         final InstanceGroup instanceGroup = instanceGroupService.findById(instanceGroupId);
         Preconditions.checkNotNull(instanceGroup,"ip="+ip+" is not exist at InstanceGroup");
@@ -159,7 +161,7 @@ public class ServerInstanceService {
                 .build();
         serverInstanceRepository.save(serverInstance);
         final String url = String.format(TARGET_INIT_SERVER_URL, serverInstance.getIp());
-        instanceGroup.setSourceName("http://xxx/dist/"+instanceGroup.getSourceName());
+        instanceGroup.setSourceName("http://localhost:8080/dist/"+instanceGroup.getSourceName());
         final String result = execAction(instanceGroup, url);
         return result;
     }
