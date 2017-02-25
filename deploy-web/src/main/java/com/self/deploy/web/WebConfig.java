@@ -29,8 +29,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/")
                 .addResourceLocations("file:/home/shaojieyue/tools/workspace/deploy-framework/deploy-web/src/main/resources/static/index.html");
 
-        registry.addResourceHandler("/dist/")
-                .addResourceLocations("/data/deploy/dist-source/");
+        registry.addResourceHandler("/dist/**")
+                .addResourceLocations("file:/data/deploy/dist-source/");
         super.addResourceHandlers(registry);
     }
 

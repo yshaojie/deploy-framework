@@ -8,6 +8,7 @@ server_args="${main_args}"
 server_jvm_args="${jvm_args}"
 server_main_class="${main_class}"
 server_resources="${server_home}/resources/"
+packge_zip="${server_name}.zip"
 
 echo "##################################################################"
 echo "server_ip=${server_ip}"
@@ -141,19 +142,19 @@ stop_server() {
 
 case "$1" in
     deploy)
-        rm -f ${server_home}/${source_path}
+        rm -f ${server_home}/${packge_zip}
         echo "wget -cq ${source_path}"
-        wget -cqO ${server_home}/${source_path} ${source_path}
+        wget -cqO ${server_home}/${packge_zip} ${source_path}
         command_is_success "wget file ${source_path} fail."
-        stop
+        stop_server
         #clear dir
         rm -rf ${server_home}/lib ${server_home}/resources
-        unzip -oq ${source_path} -d ${server_home}
-        start
+        unzip -oq ${packge_zip} -d ${server_home}
+        start_server
     ;;
     delete)
         echo "delete server ${server_name}"
-        stop
+        stop_server
         sleep 2
         #del server
         echo "delete dir: ${server_home}"
