@@ -1,4 +1,4 @@
-package com.self.deploy.web.util;
+package com.self.deploy.common.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

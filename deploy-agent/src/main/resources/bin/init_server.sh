@@ -1,8 +1,8 @@
 #!/bin/bash
 
 server_name="${server_name}"
-server_home="${HOME}/app/${server_name}"
-server_log_home="${HOME}/log/${server_name}"
+server_home="/servers/${server_name}"
+server_log_home="/data/logs/${server_name}"
 server_args="${main_args}"
 server_jvm_args="${jvm_args}"
 server_main_class="${main_class}"
@@ -20,19 +20,18 @@ echo "server_resources=${server_resources}"
 echo "####################################################################"
 
 echo "start init the server[${server_name}] instance"
-server_home="${HOME}/app/${server_name}"
-server_log_home="${HOME}/log/${server_name}"
 if [ -d "${server_home}" ]; then
     echo "the ${server_name} exist"
     exit 1
 fi
 
-mkdir -p ${server_home}
+mkdir -pv ${server_home}
 
 if [ -d "${server_log_home}" ]; then
     rm -rf "${server_log_home}"
 fi
-mkdir -p ${server_log_home}
+
+mkdir -pv ${server_log_home}
 
 cp template_server.sh ${server_home}/server.sh
 
@@ -42,7 +41,7 @@ sed -i "s#__server_jvm_args#${jvm_args}#g" server.sh
 sed -i "s#__server_args#${main_args}#g" server.sh
 sed -i "s#__server_main_class#${main_class}#g" server.sh
 sed -i "s#__server_name#${server_name}#g" server.sh
-sed -i "s#__ip#${server_ip}#g" server.sh
+sed -i "s#__server_ip#${server_ip}#g" server.sh
+
 
 echo "init server[${server_name}] finished"
-exit 0

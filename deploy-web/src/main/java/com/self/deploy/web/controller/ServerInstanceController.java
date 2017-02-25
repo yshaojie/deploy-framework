@@ -32,6 +32,11 @@ public class ServerInstanceController {
         return instances;
     }
 
+    public Object addServerInstance(int instanceGroupId, String ip){
+        String message = serverInstanceService.addServerInstance(instanceGroupId,ip);
+        return message;
+    }
+
     @RequestMapping(value = "deploy",method = RequestMethod.PUT)
     public Object deploy(@RequestParam List<Integer> serverInstanceIds){
         logger.info("obj={}",serverInstanceIds);

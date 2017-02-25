@@ -27,7 +27,7 @@ if [ ! -f target/${module}-*-dist.zip ];  then
     exit 1
 fi
 
-cp target/${module}-*-dist.zip ${link_path}/${module}.zip
+cp target/${module}-*-dist.zip ${link_path}/${module}-dist.zip
 
 echo "package finish."
 end_time=`date +%s`

@@ -15,6 +15,7 @@
     <modules>
         <module>deploy-web</module>
         <module>deploy-agent</module>
+        <module>deploy-common</module>
     </modules>
 
     <build>

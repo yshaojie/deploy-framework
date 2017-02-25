@@ -1,9 +1,9 @@
 package com.self.deploy.web.service;
 
+import com.self.deploy.common.util.ShellUtil;
 import com.self.deploy.web.bean.Project;
 import com.self.deploy.web.repository.ProjectRepository;
 import com.self.deploy.web.util.GitUtil;
-import com.self.deploy.web.util.ShellUtil;
 import com.self.deploy.web.util.XMLUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
@@ -56,7 +56,7 @@ public class ProjectService {
         param.put("project_git_path", project.getUrl());
         param.put("branch", branch);
         param.put("module", module);
-        final String package_shell = System.getProperty("resource") + "/shells/package.sh";
+        final String package_shell = System.getProperty("resources") + "/shells/package.sh";
         return ShellUtil.exec(package_shell,param)[1];
     }
 

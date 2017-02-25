@@ -1,16 +1,24 @@
 package com.self.deploy.web.service;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.common.base.Preconditions;
 import com.self.deploy.web.bean.InstanceGroup;
 import com.self.deploy.web.bean.ServerInstance;
 import com.self.deploy.web.common.Command;
 import com.self.deploy.web.repository.ServerInstanceRepository;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +26,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +37,7 @@ import java.util.List;
 @Service
 public class ServerInstanceService {
     private static final Logger logger = LoggerFactory.getLogger(ServerInstanceService.class);
+    private final static ObjectMapper mapper = newMapper();
 
     @Resource
     private ServerInstanceRepository serverInstanceRepository;
@@ -37,11 +45,12 @@ public class ServerInstanceService {
     @Resource
     private InstanceGroupService instanceGroupService;
     public static final String PACKAGE_HTTP_ROOT = "http://127.0.0.1:8080/";
-    public static final String TARGET_DEPLOY_URL="http://%s:12457/agent/deploy";
-    public static final String TARGET_RESTART_URL="http://%s:12457/agent/restart";
-    public static final String TARGET_START_URL="http://%s:12457/agent/start";
-    public static final String TARGET_STOP_URL="http://%s:12457/agent/stop";
-    public static final String TARGET_DELETE_URL="http://%s:12457/agent/delete";
+    public static final String TARGET_INIT_SERVER_URL="http://%s:9001/agent/command/init_server";
+    public static final String TARGET_DEPLOY_URL="http://%s:9001/agent/command/deploy";
+    public static final String TARGET_RESTART_URL="http://%s:9001/agent/command/restart";
+    public static final String TARGET_START_URL="http://%s:9001/agent/command/start";
+    public static final String TARGET_STOP_URL="http://%s:9001/agent/command/stop";
+    public static final String TARGET_DELETE_URL="http://%s:9001/agent/command/delete";
 
     private static final CloseableHttpClient httpclient = HttpClients.createDefault();
     public List<ServerInstance> findByGroupId(int groupId) {
@@ -113,11 +122,13 @@ public class ServerInstanceService {
 
     private String execAction(InstanceGroup group, String url) {
         HttpPut httpPut = new HttpPut(url);
-        final ArrayList<BasicNameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("serverNmae",group.getServerName()));
-        params.add(new BasicNameValuePair("package_path",PACKAGE_HTTP_ROOT+"/"+group.getSourceName()));
-        UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(params, Charset.defaultCharset());
-        httpPut.setEntity(urlEncodedFormEntity);
+        StringEntity stringEntity = null;
+        try {
+            stringEntity = new StringEntity(mapper.writeValueAsString(group), ContentType.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        httpPut.setEntity(stringEntity);
         CloseableHttpResponse httpResponse = null;
         try {
             httpResponse = httpclient.execute(httpPut);
@@ -137,5 +148,40 @@ public class ServerInstanceService {
             return "";
         }
         return "";
+    }
+
+    public String addServerInstance(int instanceGroupId, String ip) {
+        final InstanceGroup instanceGroup = instanceGroupService.findById(instanceGroupId);
+        Preconditions.checkNotNull(instanceGroup,"ip="+ip+" is not exist at InstanceGroup");
+        final ServerInstance serverInstance = ServerInstance.builder()
+                .instanceGroupId(instanceGroup.getId())
+                .ip(ip)
+                .build();
+        serverInstanceRepository.save(serverInstance);
+        final String url = String.format(TARGET_INIT_SERVER_URL, serverInstance.getIp());
+        instanceGroup.setSourceName("http://xxx/dist/"+instanceGroup.getSourceName());
+        final String result = execAction(instanceGroup, url);
+        return result;
+    }
+
+    private static final ObjectMapper newMapper(){
+        ObjectMapper objectMapper = new ObjectMapper();
+        // 允许单引号
+        objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+        // 允许反斜杆等字符
+        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+        // 允许出现对象中没有的字段
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true) ;
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        //不进行格式化打印
+        objectMapper.disable(SerializationFeature.INDENT_OUTPUT);
+        objectMapper.configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false);
+        objectMapper.configure(JsonGenerator.Feature.AUTO_CLOSE_JSON_CONTENT, false);
+        objectMapper.disable(SerializationFeature.FLUSH_AFTER_WRITE_VALUE);
+        objectMapper.disable(SerializationFeature.CLOSE_CLOSEABLE);
+        objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        return objectMapper;
     }
 }
