@@ -1,4 +1,4 @@
-package com.self.agent.bean;
+package com.self.deploy.common.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +18,6 @@ public class ServerInstanceConfig {
     private String mainClass;
     private String mainArgs;
     private String jvmArgs;
-    private String sourceName;
+    private String sourcePath;
     private String serverName;
 }

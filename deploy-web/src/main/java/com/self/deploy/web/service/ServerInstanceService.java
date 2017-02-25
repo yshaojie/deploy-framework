@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.base.Preconditions;
+import com.self.deploy.common.bean.ServerInstanceConfig;
 import com.self.deploy.web.bean.InstanceGroup;
 import com.self.deploy.web.bean.ServerInstance;
 import com.self.deploy.web.common.Command;
@@ -122,10 +123,17 @@ public class ServerInstanceService {
     }
 
     private String execAction(InstanceGroup group, String url) {
+        final ServerInstanceConfig instanceConfig = ServerInstanceConfig.builder()
+                .serverName(group.getServerName())
+                .mainClass(group.getMainClass())
+                .mainArgs(group.getMainArgs())
+                .jvmArgs(group.getJvmArgs())
+                .sourcePath("http://localhost:8080/dist/"+group.getSourceName())
+                .build();
         HttpPut httpPut = new HttpPut(url);
         StringEntity stringEntity = null;
         try {
-            stringEntity = new StringEntity(mapper.writeValueAsString(group), ContentType.APPLICATION_JSON);
+            stringEntity = new StringEntity(mapper.writeValueAsString(instanceConfig), ContentType.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -161,7 +169,6 @@ public class ServerInstanceService {
                 .build();
         serverInstanceRepository.save(serverInstance);
         final String url = String.format(TARGET_INIT_SERVER_URL, serverInstance.getIp());
-        instanceGroup.setSourceName("http://localhost:8080/dist/"+instanceGroup.getSourceName());
         final String result = execAction(instanceGroup, url);
         return result;
     }

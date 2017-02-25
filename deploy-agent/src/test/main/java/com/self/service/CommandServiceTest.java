@@ -1,8 +1,8 @@
 package com.self.service;
 
 import com.self.agent.AgentApplication;
-import com.self.agent.bean.ServerInstanceConfig;
 import com.self.agent.service.CommandService;
+import com.self.deploy.common.bean.ServerInstanceConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +39,7 @@ public class CommandServiceTest {
                 .mainArgs("")
                 .mainClass("com.goabroad.user.UserWebApplication")
                 .serverName("user-web-server")
-                .sourceName("http://localhost:8080/dist/http://localhost:8080/dist/http://localhost:8080/dist/http://localhost:8080/dist/http://localhost:8080/dist/user-web-server-dist.zip")
+                .sourcePath("http://localhost:8080/dist/http://localhost:8080/dist/http://localhost:8080/dist/http://localhost:8080/dist/http://localhost:8080/dist/user-web-server-dist.zip")
                 .build();
         final String server = commandService.initServer(instanceConfig);
     }

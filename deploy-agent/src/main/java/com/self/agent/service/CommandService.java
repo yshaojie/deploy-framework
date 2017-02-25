@@ -1,6 +1,6 @@
 package com.self.agent.service;
 
-import com.self.agent.bean.ServerInstanceConfig;
+import com.self.deploy.common.bean.ServerInstanceConfig;
 import com.self.deploy.common.util.ShellUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class CommandService {
         params.put("main_args", StringUtils.trimToEmpty(serverInstanceConfig.getMainArgs()));
         params.put("jvm_args",serverInstanceConfig.getJvmArgs());
         params.put("main_class",serverInstanceConfig.getMainClass());
-        params.put("source_path",serverInstanceConfig.getSourceName());
+        params.put("source_path",serverInstanceConfig.getSourcePath());
         params.put("shell_home",SHELL_PATH);
         final String[] strings = ShellUtil.exec(new String[]{SHELL_PATH + INIT_SERVER_SHELL}, params);
         return strings[1];
