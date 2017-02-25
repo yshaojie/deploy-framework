@@ -1,5 +1,6 @@
 package com.self.agent.service;
 
+import com.self.deploy.common.Command;
 import com.self.deploy.common.bean.ServerInstanceConfig;
 import com.self.deploy.common.util.ShellUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -20,8 +21,60 @@ public class CommandService {
     private static final Logger logger = LoggerFactory.getLogger(CommandService.class);
     public static final String SHELL_PATH = System.getProperty("resources","/servers/agent/resources/")+"/shells/";
     public static final String INIT_SERVER_SHELL = "/init_server.sh";
+    public static final String DEPLOY_SERVER_SHELL = "/deploy_server.sh";
 
     public String initServer(ServerInstanceConfig serverInstanceConfig) {
+        return execCommand(Command.INIT_SERVER,serverInstanceConfig);
+    }
+
+    public String deployServer(ServerInstanceConfig serverInstanceConfig) {
+        return execCommand(Command.DEPLOY,serverInstanceConfig);
+    }
+
+    public String startServer(ServerInstanceConfig serverInstanceConfig) {
+        return execCommand(Command.START,serverInstanceConfig);
+    }
+
+    public String restartServer(ServerInstanceConfig serverInstanceConfig) {
+        return execCommand(Command.RESTART,serverInstanceConfig);
+    }
+
+    public String stopServer(ServerInstanceConfig serverInstanceConfig) {
+        return execCommand(Command.STOP,serverInstanceConfig);
+    }
+
+    public String deleteServer(ServerInstanceConfig serverInstanceConfig) {
+        return execCommand(Command.DELETE,serverInstanceConfig);
+    }
+
+    public String execCommand(Command command,ServerInstanceConfig serverInstanceConfig){
+        String shell = null;
+        switch (command){
+            case INIT_SERVER:{
+                shell = INIT_SERVER_SHELL;
+                break;
+            }
+            case DEPLOY: {
+                shell = DEPLOY_SERVER_SHELL;
+                break;
+            }
+            case RESTART: {
+                shell = DEPLOY_SERVER_SHELL;
+                break;
+            }
+            case START: {
+                shell = DEPLOY_SERVER_SHELL;
+                break;
+            }
+            case STOP: {
+                shell = DEPLOY_SERVER_SHELL;
+                break;
+            }
+            case DELETE: {
+                shell = DEPLOY_SERVER_SHELL;
+                break;
+            }
+        }
         Map params = new HashMap<>();
         params.put("server_name",serverInstanceConfig.getServerName());
         params.put("main_args", StringUtils.trimToEmpty(serverInstanceConfig.getMainArgs()));
@@ -29,7 +82,8 @@ public class CommandService {
         params.put("main_class",serverInstanceConfig.getMainClass());
         params.put("source_path",serverInstanceConfig.getSourcePath());
         params.put("shell_home",SHELL_PATH);
-        final String[] strings = ShellUtil.exec(new String[]{SHELL_PATH + INIT_SERVER_SHELL}, params);
+        final String[] strings = ShellUtil.exec(new String[]{SHELL_PATH + shell,command.toString().toLowerCase()}, params);
         return strings[1];
+
     }
 }

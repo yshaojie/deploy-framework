@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #server_name server_args server_jvm_args server_main_class
 server_ip="__server_ip"
 server_name="${server_name}"
@@ -142,8 +142,8 @@ stop_server() {
 case "$1" in
     deploy)
         rm -f ${server_home}/${source_path}
-        echo "wget -cq http://10.10.76.79:37449/publish/${source_path}"
-        wget -cqO ${server_home}/${source_path} http://10.10.76.79:37449/publish/${source_path}
+        echo "wget -cq ${source_path}"
+        wget -cqO ${server_home}/${source_path} ${source_path}
         command_is_success "wget file ${source_path} fail."
         stop
         #clear dir
@@ -151,7 +151,7 @@ case "$1" in
         unzip -oq ${source_path} -d ${server_home}
         start
     ;;
-    delete_server)
+    delete)
         echo "delete server ${server_name}"
         stop
         sleep 2

@@ -8,10 +8,10 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.base.Preconditions;
+import com.self.deploy.common.Command;
 import com.self.deploy.common.bean.ServerInstanceConfig;
 import com.self.deploy.web.bean.InstanceGroup;
 import com.self.deploy.web.bean.ServerInstance;
-import com.self.deploy.web.common.Command;
 import com.self.deploy.web.repository.ServerInstanceRepository;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -60,7 +60,7 @@ public class ServerInstanceService {
     }
 
     public List<String> deploy(List<Integer> serverInstanceIds) {
-        return batchRequest(serverInstanceIds,Command.DEPLOY);
+        return batchRequest(serverInstanceIds, Command.DEPLOY);
     }
 
     public List<String> restart(List<Integer> serverInstanceIds) {

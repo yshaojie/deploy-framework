@@ -29,4 +29,34 @@ public class CommandController {
         return result;
     }
 
+    @RequestMapping(value = "deploy")
+    public String deploy(@RequestBody ServerInstanceConfig serverInstanceConfig){
+        String result = commandService.deployServer(serverInstanceConfig);
+        return result;
+    }
+
+    @RequestMapping(value = "restart")
+    public String restart(@RequestBody ServerInstanceConfig serverInstanceConfig){
+        String result = commandService.deployServer(serverInstanceConfig);
+        return result;
+    }
+
+    @RequestMapping(value = "start")
+    public String start(@RequestBody ServerInstanceConfig serverInstanceConfig){
+        String result = commandService.deployServer(serverInstanceConfig);
+        return result;
+    }
+
+    @RequestMapping(value = "stop")
+    public String stop(@RequestBody ServerInstanceConfig serverInstanceConfig){
+        String result = commandService.deployServer(serverInstanceConfig);
+        return result;
+    }
+
+    @RequestMapping(value = "delete")
+    public String delete(@RequestBody ServerInstanceConfig serverInstanceConfig){
+        String result = commandService.deployServer(serverInstanceConfig);
+        return result;
+    }
+
 }
