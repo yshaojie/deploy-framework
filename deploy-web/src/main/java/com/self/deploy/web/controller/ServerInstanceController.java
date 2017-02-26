@@ -1,6 +1,6 @@
 package com.self.deploy.web.controller;
 
-import com.google.common.collect.Maps;
+import com.self.deploy.common.bean.Result;
 import com.self.deploy.web.bean.ServerInstance;
 import com.self.deploy.web.service.ServerInstanceService;
 import org.slf4j.Logger;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by shaojieyue
@@ -36,16 +35,13 @@ public class ServerInstanceController {
 
     @RequestMapping(value = "add",method = RequestMethod.PUT)
     public Object addServerInstance(int instanceGroupId, String ip){
-        String message = serverInstanceService.addServerInstance(instanceGroupId,ip);
-        Map data = Maps.newHashMap();
-        data.put("message",message);
-        return data;
+        return serverInstanceService.addServerInstance(instanceGroupId,ip);
     }
 
     @RequestMapping(value = "deploy",method = RequestMethod.PUT)
     public Object deploy(@RequestParam List<Integer> serverInstanceIds){
         logger.info("obj={}",serverInstanceIds);
-        List<String> results = serverInstanceService.deploy(serverInstanceIds);
+        List<Result> results = serverInstanceService.deploy(serverInstanceIds);
         return results;
     }
 

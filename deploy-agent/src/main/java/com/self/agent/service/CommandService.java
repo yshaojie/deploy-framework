@@ -1,6 +1,7 @@
 package com.self.agent.service;
 
 import com.self.deploy.common.Command;
+import com.self.deploy.common.bean.Result;
 import com.self.deploy.common.bean.ServerInstanceConfig;
 import com.self.deploy.common.util.ShellUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -23,31 +24,31 @@ public class CommandService {
     public static final String INIT_SERVER_SHELL = "/init_server.sh";
     public static final String DEPLOY_SERVER_SHELL = "/deploy_server.sh";
 
-    public String initServer(ServerInstanceConfig serverInstanceConfig) {
+    public Result initServer(ServerInstanceConfig serverInstanceConfig) {
         return execCommand(Command.INIT_SERVER,serverInstanceConfig);
     }
 
-    public String deployServer(ServerInstanceConfig serverInstanceConfig) {
+    public Result deployServer(ServerInstanceConfig serverInstanceConfig) {
         return execCommand(Command.DEPLOY,serverInstanceConfig);
     }
 
-    public String startServer(ServerInstanceConfig serverInstanceConfig) {
+    public Result startServer(ServerInstanceConfig serverInstanceConfig) {
         return execCommand(Command.START,serverInstanceConfig);
     }
 
-    public String restartServer(ServerInstanceConfig serverInstanceConfig) {
+    public Result restartServer(ServerInstanceConfig serverInstanceConfig) {
         return execCommand(Command.RESTART,serverInstanceConfig);
     }
 
-    public String stopServer(ServerInstanceConfig serverInstanceConfig) {
+    public Result stopServer(ServerInstanceConfig serverInstanceConfig) {
         return execCommand(Command.STOP,serverInstanceConfig);
     }
 
-    public String deleteServer(ServerInstanceConfig serverInstanceConfig) {
+    public Result deleteServer(ServerInstanceConfig serverInstanceConfig) {
         return execCommand(Command.DELETE,serverInstanceConfig);
     }
 
-    public String execCommand(Command command,ServerInstanceConfig serverInstanceConfig){
+    public Result execCommand(Command command, ServerInstanceConfig serverInstanceConfig){
         String shell = null;
         switch (command){
             case INIT_SERVER:{
@@ -83,7 +84,8 @@ public class CommandService {
         params.put("source_path",serverInstanceConfig.getSourcePath());
         params.put("shell_home",SHELL_PATH);
         final String[] strings = ShellUtil.exec(new String[]{SHELL_PATH + shell,command.toString().toLowerCase()}, params);
-        return strings[1];
+        final Result result = Result.builder().success("0".equals(strings[0])).message(strings[1]).build();
+        return result;
 
     }
 }

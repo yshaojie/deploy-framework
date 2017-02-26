@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.base.Preconditions;
 import com.self.deploy.common.Command;
+import com.self.deploy.common.bean.Result;
 import com.self.deploy.common.bean.ServerInstanceConfig;
 import com.self.deploy.web.bean.InstanceGroup;
 import com.self.deploy.web.bean.ServerInstance;
@@ -59,28 +60,28 @@ public class ServerInstanceService {
         return serverInstanceRepository.findByInstanceGroupId(groupId);
     }
 
-    public List<String> deploy(List<Integer> serverInstanceIds) {
+    public List<Result> deploy(List<Integer> serverInstanceIds) {
         return batchRequest(serverInstanceIds, Command.DEPLOY);
     }
 
-    public List<String> restart(List<Integer> serverInstanceIds) {
+    public List<Result> restart(List<Integer> serverInstanceIds) {
         return batchRequest(serverInstanceIds,Command.RESTART);
     }
 
-    public List<String> start(List<Integer> serverInstanceIds) {
+    public List<Result> start(List<Integer> serverInstanceIds) {
         return batchRequest(serverInstanceIds,Command.START);
     }
 
-    public List<String> stop(List<Integer> serverInstanceIds) {
+    public List<Result> stop(List<Integer> serverInstanceIds) {
         return batchRequest(serverInstanceIds,Command.STOP);
     }
 
-    public List<String> delete(List<Integer> serverInstanceIds) {
+    public List<Result> delete(List<Integer> serverInstanceIds) {
         return batchRequest(serverInstanceIds,Command.DELETE);
     }
 
-    public List<String> batchRequest(List<Integer> serverInstanceIds, Command command) {
-        List<String> results = new ArrayList<>();
+    public List<Result> batchRequest(List<Integer> serverInstanceIds, Command command) {
+        List<Result> results = new ArrayList<>();
         final Iterable<ServerInstance> serverInstances = serverInstanceRepository.findAll(serverInstanceIds);
         for (ServerInstance serverInstance : serverInstances) {
             InstanceGroup group = instanceGroupService.findById(serverInstance.getInstanceGroupId());
@@ -108,11 +109,11 @@ public class ServerInstanceService {
                     break;
                 }
             }
-            String message = "";
+            Result message = null;
             try {
                 message = execAction(group, url);
             }catch (Exception e){
-                message = "发布出现未知错误";
+                message = Result.builder().success(false).message("发布出现未知错误").build();
                 logger.error("ex",e);
             }
             results.add(message);
@@ -122,7 +123,7 @@ public class ServerInstanceService {
         return results;
     }
 
-    private String execAction(InstanceGroup group, String url) {
+    private Result execAction(InstanceGroup group, String url) {
         final ServerInstanceConfig instanceConfig = ServerInstanceConfig.builder()
                 .serverName(group.getServerName())
                 .mainClass(group.getMainClass())
@@ -144,23 +145,21 @@ public class ServerInstanceService {
         } catch (IOException e) {
             throw new RuntimeException("exec fail.",e);
         }
+        //发送请求失败
+        if (httpResponse.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+            return Result.builder().success(false).message("请求agent 500 错误").build();
+        }
         final String result;
         try {
             result = EntityUtils.toString(httpResponse.getEntity());
+            return mapper.convertValue(result,Result.class);
         } catch (IOException e) {
             throw new RuntimeException("exec fail.",e);
         }
-
-        //发送请求失败
-        if (httpResponse.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-            logger.info("send sms fail. http statusCode={},result={}",httpResponse.getStatusLine().getStatusCode(),result);
-            return "";
-        }
-        return "";
     }
 
     @Transactional
-    public String addServerInstance(int instanceGroupId, String ip) {
+    public Result addServerInstance(int instanceGroupId, String ip) {
         final InstanceGroup instanceGroup = instanceGroupService.findById(instanceGroupId);
         Preconditions.checkNotNull(instanceGroup,"ip="+ip+" is not exist at InstanceGroup");
         final ServerInstance serverInstance = ServerInstance.builder()
@@ -169,8 +168,7 @@ public class ServerInstanceService {
                 .build();
         serverInstanceRepository.save(serverInstance);
         final String url = String.format(TARGET_INIT_SERVER_URL, serverInstance.getIp());
-        final String result = execAction(instanceGroup, url);
-        return result;
+        return execAction(instanceGroup, url);
     }
 
     private static final ObjectMapper newMapper(){

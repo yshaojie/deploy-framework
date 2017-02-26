@@ -1,6 +1,7 @@
 package com.self.agent.controller;
 
 import com.self.agent.service.CommandService;
+import com.self.deploy.common.bean.Result;
 import com.self.deploy.common.bean.ServerInstanceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,38 +25,38 @@ public class CommandController {
     private CommandService commandService;
 
     @RequestMapping(value = "init_server")
-    public String initServer(@RequestBody ServerInstanceConfig serverInstanceConfig){
-        String result = commandService.initServer(serverInstanceConfig);
+    public  Result initServer(@RequestBody ServerInstanceConfig serverInstanceConfig){
+        Result result = commandService.initServer(serverInstanceConfig);
         return result;
     }
 
     @RequestMapping(value = "deploy")
-    public String deploy(@RequestBody ServerInstanceConfig serverInstanceConfig){
-        String result = commandService.deployServer(serverInstanceConfig);
+    public  Result deploy(@RequestBody ServerInstanceConfig serverInstanceConfig){
+        Result result = commandService.deployServer(serverInstanceConfig);
         return result;
     }
 
     @RequestMapping(value = "restart")
-    public String restart(@RequestBody ServerInstanceConfig serverInstanceConfig){
-        String result = commandService.deployServer(serverInstanceConfig);
+    public  Result restart(@RequestBody ServerInstanceConfig serverInstanceConfig){
+        Result result = commandService.deployServer(serverInstanceConfig);
         return result;
     }
 
     @RequestMapping(value = "start")
-    public String start(@RequestBody ServerInstanceConfig serverInstanceConfig){
-        String result = commandService.deployServer(serverInstanceConfig);
+    public  Result start(@RequestBody ServerInstanceConfig serverInstanceConfig){
+        Result result = commandService.deployServer(serverInstanceConfig);
         return result;
     }
 
     @RequestMapping(value = "stop")
-    public String stop(@RequestBody ServerInstanceConfig serverInstanceConfig){
-        String result = commandService.deployServer(serverInstanceConfig);
+    public  Result stop(@RequestBody ServerInstanceConfig serverInstanceConfig){
+        Result result = commandService.deployServer(serverInstanceConfig);
         return result;
     }
 
     @RequestMapping(value = "delete")
-    public String delete(@RequestBody ServerInstanceConfig serverInstanceConfig){
-        String result = commandService.deployServer(serverInstanceConfig);
+    public  Result delete(@RequestBody ServerInstanceConfig serverInstanceConfig){
+        Result result = commandService.deployServer(serverInstanceConfig);
         return result;
     }
 
