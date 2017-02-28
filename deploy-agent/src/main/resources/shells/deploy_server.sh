@@ -1,6 +1,6 @@
 #!/bin/bash
 #server_name server_args server_jvm_args server_main_class
-server_ip="__server_ip"
+server_ip="{server_ip}"
 server_name="${server_name}"
 server_home="/servers/${server_name}"
 server_log_home="/data/logs/${server_name}"

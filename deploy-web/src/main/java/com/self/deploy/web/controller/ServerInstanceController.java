@@ -40,7 +40,6 @@ public class ServerInstanceController {
 
     @RequestMapping(value = "deploy",method = RequestMethod.PUT)
     public Object deploy(@RequestParam List<Integer> serverInstanceIds){
-        logger.info("obj={}",serverInstanceIds);
         List<Result> results = serverInstanceService.deploy(serverInstanceIds);
         return results;
     }

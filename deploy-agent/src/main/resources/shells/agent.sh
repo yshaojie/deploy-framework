@@ -96,7 +96,6 @@ case "$1" in
         unzip -o agent_current.zip
         rm -rf agent_current.zip
         cd bin
-        sed -i "/__server_ip/{s/__server_ip/${2}/;:skip n;b skip;}" deploy_server.sh
         sed -i "/__server_ip/{s/__server_ip/${2}/;:skip n;b skip;}" agent.sh
         ./agent.sh restart
     ;;

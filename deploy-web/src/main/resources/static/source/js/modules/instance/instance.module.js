@@ -2,5 +2,5 @@
     'use strict';
 
     angular
-        .module('app.instance', []);
+        .module('app.instance', ['ngDialog']);
 })();

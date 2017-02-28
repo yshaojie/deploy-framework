@@ -23,6 +23,7 @@ public class CommandService {
     public static final String SHELL_PATH = System.getProperty("resources","/servers/agent/resources/")+"/shells/";
     public static final String INIT_SERVER_SHELL = "/init_server.sh";
     public static final String DEPLOY_SERVER_SHELL = "/deploy_server.sh";
+    public static final String SERVER_IP = System.getProperty("server_ip");
 
     public Result initServer(ServerInstanceConfig serverInstanceConfig) {
         return execCommand(Command.INIT_SERVER,serverInstanceConfig);
@@ -80,11 +81,15 @@ public class CommandService {
         params.put("server_name",serverInstanceConfig.getServerName());
         params.put("main_args", StringUtils.trimToEmpty(serverInstanceConfig.getMainArgs()));
         params.put("jvm_args",serverInstanceConfig.getJvmArgs());
+        params.put("server_ip", SERVER_IP);
         params.put("main_class",serverInstanceConfig.getMainClass());
         params.put("source_path",serverInstanceConfig.getSourcePath());
         params.put("shell_home",SHELL_PATH);
         final String[] strings = ShellUtil.exec(new String[]{SHELL_PATH + shell,command.toString().toLowerCase()}, params);
-        final Result result = Result.builder().success("0".equals(strings[0])).message(strings[1]).build();
+        final Result result = Result.builder()
+                .ip(SERVER_IP)
+                .success("0".equals(strings[0]))
+                .message(strings[1]).build();
         return result;
 
     }

@@ -53,13 +53,13 @@
     "datatables": "1.10.11",
     "ng-table": "0.8.3",
     "ng-table-export": "*",
-    "ngDialog": "0.5.8",
     "textAngular": "1.4.1",
     "angular-sweetalert": ">=1.1.0",
     "angular-file-upload": "2.2.0",
     "bootstrap-filestyle": "1.2.1",
     "loaders.css": "0.1.2",
-    "whirl": "^1.0.0"
+    "whirl": "^1.0.0",
+    "ngDialog": "0.5.8"
   },
   "resolutions": {
     "angular": "1.5.0",

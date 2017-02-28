@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -31,6 +32,7 @@ public class CommandController {
     }
 
     @RequestMapping(value = "deploy")
+    @ResponseBody
     public  Result deploy(@RequestBody ServerInstanceConfig serverInstanceConfig){
         Result result = commandService.deployServer(serverInstanceConfig);
         return result;

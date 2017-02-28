@@ -39,12 +39,7 @@
   "bower_components/ngDialog/css/ngDialog-theme-default.min.css",
   "bower_components/textAngular/dist/*",
   "bower_components/textAngular/src/*",
-  "bower_components/sweetalert/dist/sweetalert.css",
-  "bower_components/sweetalert/dist/sweetalert.min.js",
-  "bower_components/angular-sweetalert/SweetAlert.js",
   "bower_components/bootstrap-filestyle/src/bootstrap-filestyle.js",
-  "bower_components/angular-file-upload/dist/angular-file-upload.js",
   "bower_components/loaders.css/loaders.css",
   "bower_components/whirl/dist/whirl.css"
-
 ]

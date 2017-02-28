@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Result {
+    private String ip;
     private boolean success;
     private String message;
 }

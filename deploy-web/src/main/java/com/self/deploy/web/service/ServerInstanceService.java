@@ -109,15 +109,16 @@ public class ServerInstanceService {
                     break;
                 }
             }
-            Result message = null;
+            Result result = null;
             try {
-                message = execAction(group, url);
+                result = execAction(group, url);
+                result.setIp(serverInstance.getIp());
             }catch (Exception e){
-                message = Result.builder().success(false).message("发布出现未知错误").build();
+                result = Result.builder().ip(serverInstance.getIp()).success(false).message("发布出现未知错误").build();
                 logger.error("ex",e);
             }
-            results.add(message);
-            logger.info("end {} server,result={} serverName={},ip={}",command,message,group.getServerName(),serverInstance.getIp());
+            results.add(result);
+            logger.info("end {} server,result={} serverName={},ip={}",command,result,group.getServerName(),serverInstance.getIp());
         }
 
         return results;

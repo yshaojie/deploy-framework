@@ -53,7 +53,6 @@ function init_agent(){
     rm -rf jdk-7u17-linux-x64.gz
     ln -s jdk1.7.0_17 jdk7
     sed -i "/__server_ip/{s/__server_ip/${2}/;:skip n;b skip;}" bin/agent.sh
-    sed -i "/__server_ip/{s/__server_ip/${2}/;:skip n;b skip;}" deploy_server.sh
     echo "init agent finished"
     cd -
 }
