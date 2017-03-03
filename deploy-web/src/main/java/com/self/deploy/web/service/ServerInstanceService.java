@@ -113,8 +113,9 @@ public class ServerInstanceService {
             try {
                 result = execAction(group, url);
                 result.setIp(serverInstance.getIp());
+
             }catch (Exception e){
-                result = Result.builder().ip(serverInstance.getIp()).success(false).message("发布出现未知错误").build();
+                result = new Result(serverInstance.getIp(),false,"发布出现未知错误");
                 logger.error("ex",e);
             }
             results.add(result);
@@ -148,12 +149,12 @@ public class ServerInstanceService {
         }
         //发送请求失败
         if (httpResponse.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-            return Result.builder().success(false).message("请求agent 500 错误").build();
+            throw new RuntimeException("exec fail.");
         }
         final String result;
         try {
             result = EntityUtils.toString(httpResponse.getEntity());
-            return mapper.convertValue(result,Result.class);
+            return mapper.readValue(result,Result.class);
         } catch (IOException e) {
             throw new RuntimeException("exec fail.",e);
         }

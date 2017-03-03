@@ -86,10 +86,10 @@ public class CommandService {
         params.put("source_path",serverInstanceConfig.getSourcePath());
         params.put("shell_home",SHELL_PATH);
         final String[] strings = ShellUtil.exec(new String[]{SHELL_PATH + shell,command.toString().toLowerCase()}, params);
-        final Result result = Result.builder()
-                .ip(SERVER_IP)
-                .success("0".equals(strings[0]))
-                .message(strings[1]).build();
+        final Result result = new Result();
+        result.setIp(SERVER_IP);
+        result.setSuccess("0".equals(strings[0]));
+        result.setMessage(strings[1]);
         return result;
 
     }

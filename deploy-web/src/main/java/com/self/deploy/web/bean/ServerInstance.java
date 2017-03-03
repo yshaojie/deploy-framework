@@ -25,6 +25,7 @@ public class ServerInstance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String ip;//服务ip
+    private int status;//服务状态
     private int instanceGroupId;//所属实例组
     private String deployTime;//部署时间
     private String deployBy;//最后部署人

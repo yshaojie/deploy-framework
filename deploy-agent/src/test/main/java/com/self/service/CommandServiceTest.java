@@ -41,6 +41,6 @@ public class CommandServiceTest {
                 .serverName("user-web-server")
                 .sourcePath("http://localhost:8080/dist/http://localhost:8080/dist/http://localhost:8080/dist/http://localhost:8080/dist/http://localhost:8080/dist/user-web-server-dist.zip")
                 .build();
-        final String server = commandService.initServer(instanceConfig);
+        commandService.initServer(instanceConfig);
     }
 }
