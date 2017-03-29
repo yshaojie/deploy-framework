@@ -37,7 +37,7 @@ function command_is_success(){
 }
 
 get_server_pids() {
-    pids=( `ps -eo pid,user,cmd | grep "${server_resources}" | grep "${server_main_class}" |  awk '$3=="java" {print $1}'` )
+    pids=( `ps -eo pid,user,cmd | grep "python -m SimpleHTTPServer" | grep 8000 | awk '$3=="python" {print $1}' ` )
 }
 
 set_high_priority_jar() {
@@ -88,6 +88,10 @@ start_server() {
     #iterator server jar libs
     for i in `ls ${server_home}/lib/ | sort -rf`
     do
+        要换方式
+        for f in /home/shaojieyue/tools/workspace/*; do
+          echo "File -> $f"
+        done
         server_class_path=$server_class_path:${server_home}/lib/$i
     done
     export CLASSPATH=${server_class_path}
